@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>游戏宝箱 · 记在小组本子上的那些游戏</title>
+<meta name="description" content="适合团体的游戏合集：语言游戏、纸笔游戏、身体游戏、戏剧游戏、秘密身份游戏，以及只能玩一次的小诡计。告诉我们你们有几个人、想玩什么，我们来推荐。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top">
+    <span class="brand-icon" aria-hidden="true">▣</span>
+    <span class="brand-name">游戏宝箱</span>
+  </a>
+  <span class="brand-tag">记在小组本子上的那些游戏</span>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <h1><span>游戏</span><span>宝箱</span></h1>
+    <p class="hero-lead">适合团体的游戏：语言的、纸笔的、动身体的、演戏的、藏身份的，还有只能玩一次的小诡计。</p>
+    <p class="hero-sub">告诉我们你们有几个人、想玩点什么，我们来说该玩哪个。</p>
+
+    <ul class="stats" aria-label="统计">
+      <li><strong id="stat-total">0</strong><span>个游戏在宝箱里</span></li>
+      <li><strong id="stat-nomat">0</strong><span>个不需要任何材料</span></li>
+      <li><strong id="stat-nolimit">0</strong><span>个不限人数</span></li>
+    </ul>
+  </section>
+
+  <section class="sentence" aria-label="自然语言筛选">
+    <span>我们有</span>
+    <span class="stepper">
+      <button type="button" id="people-minus" aria-label="减少人数">−</button>
+      <output id="people-count">6</output>
+      <button type="button" id="people-plus" aria-label="增加人数">+</button>
+    </span>
+    <span>个人，在</span>
+    <select id="f-setting" aria-label="地点">
+      <option value="">任何地方</option>
+      <option value="interior">室内</option>
+      <option value="exterior">户外</option>
+    </select>
+    <span>，有</span>
+    <select id="f-time" aria-label="时间">
+      <option value="">全世界的时间</option>
+      <option value="5">5 分钟</option>
+      <option value="15">一刻钟</option>
+      <option value="30">半小时</option>
+      <option value="60">一小时</option>
+    </select>
+    <span>，想玩</span>
+    <select id="f-mood" aria-label="心情">
+      <option value="">随便什么</option>
+      <option value="fisico">动一动身体的</option>
+      <option value="mental">动动脑子的</option>
+      <option value="verbal">聊聊天的</option>
+      <option value="social">互相认识的</option>
+      <option value="creativo">有创意的</option>
+      <option value="tranquilo">安安静静的</option>
+    </select>
+    <span>。</span>
+  </section>
+
+  <section class="toolbar" aria-label="工具栏">
+    <div class="toolbar-row">
+      <label class="search">
+        <span class="sr-only">搜索</span>
+        <input type="search" id="q" placeholder="搜索游戏名、玩法、关键词…" autocomplete="off">
+      </label>
+      <button type="button" class="chip" id="btn-fav" aria-pressed="false">收藏 <b id="fav-count">0</b></button>
+      <button type="button" class="chip" id="btn-more" aria-expanded="false" aria-controls="more-filters">更多筛选 <b id="more-count">0</b></button>
+      <button type="button" class="chip chip-accent" id="btn-random">随便来一个</button>
+    </div>
+    <div class="toolbar-row toolbar-row-2">
+      <span class="result-count"><b id="result-count">0</b> 个游戏</span>
+      <button type="button" class="link" id="btn-clear">清除筛选</button>
+      <label class="sort">
+        <span>排序：</span>
+        <select id="sort">
+          <option value="family">按游戏类型</option>
+          <option value="rating-desc">评分最高</option>
+          <option value="rating-asc">评分最低</option>
+          <option value="alpha">按名称</option>
+          <option value="fast">最快的</option>
+          <option value="long">最长的</option>
+          <option value="people">人越多越好</option>
+          <option value="new">最近添加</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="more-filters" id="more-filters" hidden>
+      <div class="fgroup" data-key="family"><h3>游戏类型</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="space"><h3>场地</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="materials"><h3>材料</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="dynamic"><h3>玩法形式</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="skills"><h3>考验什么</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="occasions"><h3>适合场合</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="complexity"><h3>规则难度</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="age"><h3>年龄</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="moderator"><h3>主持人</h3><div class="fopts"></div></div>
+      <div class="fgroup" data-key="warnings"><h3>注意事项</h3><div class="fopts"></div></div>
+    </div>
+  </section>
+
+  <section id="results" class="results" aria-live="polite"></section>
+
+  <section class="empty" id="empty" hidden>
+    <p class="empty-title">宝箱里没有符合这些条件的东西……</p>
+    <p>试试去掉某个筛选，或者换个词搜索。</p>
+    <button type="button" class="chip" id="btn-clear-2">清除筛选</button>
+  </section>
+
+  <section class="how">
+    <h2>怎么用</h2>
+    <p>任何人都可以添加、修改或删除游戏，不需要注册。</p>
+    <p>每次改动都会保存在该游戏的历史记录里，所以一切都可以撤销：打开一个游戏，点击「历史」。</p>
+    <p>你添加或修改的内容保存在这台设备的浏览器里，刷新后依然在。</p>
+  </section>
+
+  <section class="durations">
+    <h2>时长说明</h2>
+    <ul>
+      <li><b>极短</b> 不到 5 分钟，等人的时候就能玩一把。</li>
+      <li><b>短</b> 5 到 15 分钟。</li>
+      <li><b>中等</b> 15 到 30 分钟。</li>
+      <li><b>长</b> 半小时到一小时。</li>
+      <li><b>很长</b> 一小时以上，或者贯穿整个晚上、整个旅途。</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>中文版改编自西班牙语原站 <a href="https://el.bauldejuegos.workers.dev/" rel="noopener" target="_blank">El Baúl de Juegos</a>。</span>
+  <button type="button" class="chip chip-accent" id="btn-add">添加游戏</button>
+</footer>
+
+<button type="button" class="fab" id="fab-add" aria-label="添加游戏">＋</button>
+
+<!-- 游戏详情 -->
+<dialog id="dlg-game" class="dlg dlg-game">
+  <div class="dlg-body" id="game-detail"></div>
+</dialog>
+
+<!-- 添加 / 编辑 -->
+<dialog id="dlg-form" class="dlg dlg-form">
+  <form method="dialog" id="game-form" novalidate>
+    <header class="dlg-head">
+      <h2 id="form-title">添加一个游戏</h2>
+      <p>知道什么就填什么。只有名称、类型、时长和玩法是必填的。</p>
+    </header>
+
+    <div class="form-grid">
+      <label class="span2"><span>名称 *</span><input name="name" required maxlength="80"></label>
+      <label class="span2"><span>一句话介绍</span><input name="tagline" maxlength="120" placeholder="用一句话勾起大家的兴趣"></label>
+      <label><span>类型 *</span><select name="family" required></select></label>
+      <label><span>时长 *</span><select name="duration" required></select></label>
+      <label><span>最少人数</span><input name="playersMin" type="number" min="1" max="99" value="2"></label>
+      <label><span>最多人数（留空＝不限）</span><input name="playersMax" type="number" min="1" max="99"></label>
+      <label class="span2"><span>怎么玩 *</span><textarea name="description" rows="6" required placeholder="把规则讲清楚，像在跟一个没玩过的朋友解释一样。"></textarea></label>
+      <label class="span2"><span>秘密 / 诀窍（如果是诡计类游戏）</span><textarea name="secret" rows="2" placeholder="只给主持人看的那部分。"></textarea></label>
+
+      <fieldset class="span2"><legend>地点</legend>
+        <label class="inline"><input type="checkbox" name="setting" value="interior" checked> 室内</label>
+        <label class="inline"><input type="checkbox" name="setting" value="exterior" checked> 户外</label>
+      </fieldset>
+      <label><span>场地</span><select name="space"></select></label>
+      <label><span>材料</span><select name="materials"></select></label>
+      <label class="span2"><span>需要什么材料</span><input name="materialsList" placeholder="例如：纸和笔、一副扑克牌"></label>
+      <label><span>获取方式</span><select name="purchase"><option>免费</option><option>自制</option><option>购买</option></select></label>
+      <label><span>规则难度</span><select name="complexity"></select></label>
+      <label><span>年龄</span><select name="age"></select></label>
+      <label class="inline-top"><input type="checkbox" name="moderator"> 需要一位知道规则的主持人</label>
+
+      <fieldset class="span2 profile-set"><legend>游戏画像（0 到 3）</legend>
+        <div class="profile-grid" id="profile-inputs"></div>
+      </fieldset>
+
+      <fieldset class="span2" data-multi="dynamic"><legend>玩法形式</legend></fieldset>
+      <fieldset class="span2" data-multi="skills"><legend>考验什么</legend></fieldset>
+      <fieldset class="span2" data-multi="occasions"><legend>适合场合</legend></fieldset>
+      <fieldset class="span2" data-multi="warnings"><legend>注意事项</legend></fieldset>
+
+      <label class="span2"><span>小贴士</span><textarea name="tips" rows="2" placeholder="变体玩法、常见坑、让它更好玩的办法。"></textarea></label>
+      <label class="span2"><span>你的名字（可选，会出现在历史记录里）</span><input name="author" maxlength="40"></label>
+    </div>
+
+    <p class="form-error" id="form-error" hidden></p>
+    <footer class="dlg-foot">
+      <button type="button" class="chip" id="form-cancel">取消</button>
+      <button type="submit" class="chip chip-accent">放进宝箱</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- 历史 -->
+<dialog id="dlg-history" class="dlg dlg-history">
+  <div class="dlg-body" id="history-body"></div>
+</dialog>
+
+<!-- 复制回退 -->
+<dialog id="dlg-copy" class="dlg dlg-copy">
+  <header class="dlg-head"><h2>复制这段文字</h2><p>浏览器没有允许自动复制。</p></header>
+  <textarea id="copy-text" rows="10" readonly></textarea>
+  <p class="muted">文字已选中：用键盘复制，或长按选择。</p>
+  <footer class="dlg-foot"><button type="button" class="chip" id="copy-close">关闭</button></footer>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="games.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
